@@ -1,0 +1,11 @@
+<% @events.each do |event| %>
+  Name: <%= event.name %>
+  User Email: <%= event.user_email %>
+  Address: <%= event.address %>
+  Start Time: <%= event.start_time %>
+  Departure Time: <%= event.departure_time %>
+  is_latest: <%= event.is_latest %>
+  has_notified: <%= event.has_notified %>
+  created_at: <%= event.created_at %>
+  updated_at: <%= event.updated_at %>
+<% end %>
