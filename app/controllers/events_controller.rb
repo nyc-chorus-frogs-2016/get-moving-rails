@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    event_params = JSON.parse(params.first[0])
+    event_params = params
     @event = Event.new(
       name: event_params["name"],
       address: event_params["address"],
