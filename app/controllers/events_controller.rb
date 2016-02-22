@@ -1,5 +1,9 @@
 class EventsController < ApplicationController
 
+  def index
+    @events = Event.all.order(created_at: :desc)
+  end
+
   def create
     event_params = JSON.parse(params.first[0])
     @event = Event.new(
@@ -14,9 +18,5 @@ class EventsController < ApplicationController
       render text: 'Event not saved'
     end
   end
-
-  # def event_params
-  #   params.require(:event).permit(:name, :address, :user_email, :start_time, :departure_time)
-  # end
 
 end
