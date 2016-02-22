@@ -15,9 +15,3 @@ class Event < ActiveRecord::Base
   end
 
 end
-
-
-    # old_events = where(user_email: :user_email)
-    # old_events.update_all(is_latest => false)
-
-    # Event.all.update_all("is_latest = false", "where user_email: email")
