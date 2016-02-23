@@ -3,8 +3,7 @@ class Event < ActiveRecord::Base
   validates :address, presence: true
   validates :user_email, presence: true
   validates :start_time, presence: true
-  #device token
-  # validates :departure_time, presence: true
+  validates :device_token, presence: true
 
   before_save :set_new_latest
 
