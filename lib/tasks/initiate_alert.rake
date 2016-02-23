@@ -14,5 +14,14 @@ task :find_upcoming => :environment do
   end
 end
 
-#run rake task on the command line to test for now
-#add httparty here
+task :calculate_directions => :environment do
+  Event.all.each do |event|
+    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + event.user_lat.to_s + "," + event.user_lng.to_s + "&destinations=" + event.event_lat.to_s + "," + event.event_lng.to_s + "&key=AIzaSyAz4HXhCsn9tZdJ24R3lCMZ2kFakiabDgw"
+
+    response = HTTParty.get(url)
+
+    seconds_to_destination = response["rows"][0]["elements"][0]["duration"]["value"]
+    new_departure_time = event.start_time - seconds_to_destination
+    event.update_attributes(departure_time: new_departure_time)
+  end
+end
