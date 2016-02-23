@@ -11,6 +11,7 @@ class EventsController < ApplicationController
       address: event_params["address"],
       user_email: event_params["user_email"],
       start_time: event_params["start_time"],
+      departure_time: event_params["departure_time"]
       device_token: event_params["device_token"]
       )
     if @event.save
