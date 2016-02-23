@@ -14,3 +14,5 @@ task :find_upcoming => :environment do
   end
 end
 
+#run rake task on the command line to test for now
+#add httparty here
