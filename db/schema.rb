@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160221003045) do
     t.datetime "departure_time"
     t.boolean  "is_latest",      default: true
     t.boolean  "has_notified",   default: false
+    t.string   "device_token",                   null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
   end
