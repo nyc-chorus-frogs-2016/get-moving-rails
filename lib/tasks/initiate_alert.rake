@@ -25,3 +25,7 @@ task :calculate_directions => :environment do
     event.update_attributes(departure_time: new_departure_time)
   end
 end
+
+task :scheduled_jobs => [:calculate_directions, :find_upcoming] do
+  puts 'Running shceduled tasks'
+end
