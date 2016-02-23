@@ -58,14 +58,17 @@ Event.create!(name: 'Job Interview at Whole Foods',
               address: '60 Wall street',
               user_email: 'getmovingapp1@gmail.com',
               start_time: DateTime.parse('2016-02-22T21:31:46+00:00'),
+              departure_time: DateTime.parse('2016-02-23T16:50:05+00:00'),
               departure_time: DateTime.parse('2016-02-22T21:31:46+00:00'),
-              device_token: "123452357547876868576458674"
+              device_token: "123452357547876868576458674",
+              has_notified: true
               )
 
 Event.create!(name: 'Job Interview at PlanetFitness',
               address: '60 Wall street',
               user_email: 'getmovingapp1@gmail.com',
               start_time: DateTime.parse('2016-02-22T21:31:46+00:00'),
+              departure_time: DateTime.parse('2016-02-23T16:52:05+00:00')
               departure_time: DateTime.parse('2016-02-22T21:31:46+00:00'),
               device_token: "123455657543476834576458674"
               )
