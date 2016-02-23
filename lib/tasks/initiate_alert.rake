@@ -8,7 +8,7 @@ task :find_upcoming => :environment do
       puts "Your event, #{event.name}, is " + ((event.departure_time - Time.now)/60).to_s + " minutes away"
       puts "Send a push notification for '#{event.name}' to Apple."
 
-      APNS.send_notification(device_token, alert:"You need to leave for #{event.name} in the next 10 minutes!", badge: 1, sound: 'default')
+      APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in the next 10 minutes!", badge: 1, sound: 'default')
       event.update_attributes(has_notified: true)
     end
   end
