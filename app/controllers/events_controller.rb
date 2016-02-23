@@ -10,7 +10,8 @@ class EventsController < ApplicationController
       name: event_params["name"],
       address: event_params["address"],
       user_email: event_params["user_email"],
-      start_time: event_params["start_time"]
+      start_time: event_params["start_time"],
+      device_token: event_params["device_token"]
       )
     if @event.save
       render text: 'Event saved'
