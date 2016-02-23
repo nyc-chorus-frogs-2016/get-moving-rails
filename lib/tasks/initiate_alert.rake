@@ -27,5 +27,5 @@ task :calculate_directions => :environment do
 end
 
 task :scheduled_jobs => [:calculate_directions, :find_upcoming] do
-  puts 'Running shceduled tasks'
+  puts 'Running scheduled tasks'
 end
