@@ -14,9 +14,12 @@ task :find_upcoming => :environment do
   end
 end
 
+
 task :calculate_directions => :environment do
-  Event.all.each do |event|
-    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + event.user_lat.to_s + "," + event.user_lng.to_s + "&destinations=" + event.event_lat.to_s + "," + event.event_lng.to_s + "&key=AIzaSyAz4HXhCsn9tZdJ24R3lCMZ2kFakiabDgw"
+  key = ENV["GOOGLE_MAPS_KEY"]
+  events =  Event.where("has_notified = ? AND is_latest = ? AND start_time > ?", false, true, Time.now)
+  events.each do |event|
+    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + event.user_lat.to_s + "," + event.user_lng.to_s + "&destinations=" + event.event_lat.to_s + "," + event.event_lng.to_s + "&key=#{key}"
 
     response = HTTParty.get(url)
 
