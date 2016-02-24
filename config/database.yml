@@ -83,4 +83,3 @@ production:
   <<: *default
   database: get_moving_rails_production
   username: get_moving_rails
-  password: <%= ENV['GET_MOVING_RAILS_DATABASE_PASSWORD'] %>
