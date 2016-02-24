@@ -7,6 +7,7 @@ class EventsController < ApplicationController
   def create
     event_params = params
     @event = Event.new(
+      google_event_id: event_params["id"],
       name: event_params["name"],
       address: event_params["address"],
       user_email: event_params["user_email"],
