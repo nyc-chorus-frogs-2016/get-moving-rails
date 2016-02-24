@@ -1,6 +1,18 @@
 APNS.pem  = File.join(Rails.root, 'config', 'cert.pem')
 
 task :find_upcoming => :environment do
+  key = ENV["GOOGLE_MAPS_KEY"]
+  events =  Event.where("has_notified = ? AND is_latest = ? AND start_time > ?", false, true, Time.now)
+  events.each do |event|
+    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + event.user_lat.to_s + "," + event.user_lng.to_s + "&destinations=" + event.event_lat.to_s + "," + event.event_lng.to_s + "&key=#{key}"
+
+    response = HTTParty.get(url)
+
+    seconds_to_destination = response["rows"][0]["elements"][0]["duration"]["value"]
+    new_departure_time = event.start_time - seconds_to_destination
+    event.update_columns(departure_time: new_departure_time)
+  end
+
   if Event.where("departure_time < ? AND has_notified = ? AND is_latest = ? AND start_time > ?", Time.now + 600, false, true, Time.now).empty?
     puts "You have no events in the next 10 minutes, go relax for a bit"
   else
@@ -16,17 +28,6 @@ end
 
 
 task :calculate_directions => :environment do
-  key = ENV["GOOGLE_MAPS_KEY"]
-  events =  Event.where("has_notified = ? AND is_latest = ? AND start_time > ?", false, true, Time.now)
-  events.each do |event|
-    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + event.user_lat.to_s + "," + event.user_lng.to_s + "&destinations=" + event.event_lat.to_s + "," + event.event_lng.to_s + "&key=#{key}"
-
-    response = HTTParty.get(url)
-
-    seconds_to_destination = response["rows"][0]["elements"][0]["duration"]["value"]
-    new_departure_time = event.start_time - seconds_to_destination
-    event.update_attributes(departure_time: new_departure_time)
-  end
 end
 
 task :scheduled_jobs => [:calculate_directions, :find_upcoming] do
