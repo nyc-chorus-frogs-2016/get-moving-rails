@@ -1,5 +1,5 @@
 # Change these
-server '104.131.233.76', port: 3000, roles: [:web, :app, :db], primary: true
+server '104.131.233.76', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:nyc-chorus-frogs-2016/get-moving-rails.git'
 set :application,     'get-moving-rails'
