@@ -82,4 +82,3 @@ test:
 production:
   <<: *default
   database: get_moving_rails_production
-  username: get_moving_rails
