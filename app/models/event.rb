@@ -9,7 +9,7 @@ class Event < ActiveRecord::Base
 
   def set_new_latest
     email = self.user_email
-    old_events = Event.where(user_email: email)
+    old_events = Event.where(user_email: email, google_event_id: self.google_event_id)
     old_events.update_all(:is_latest => false)
   end
 

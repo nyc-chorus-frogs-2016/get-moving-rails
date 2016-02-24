@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160221003045) do
+ActiveRecord::Schema.define(version: 20160224234247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,15 +22,16 @@ ActiveRecord::Schema.define(version: 20160221003045) do
     t.string   "user_email"
     t.datetime "start_time"
     t.datetime "departure_time"
-    t.boolean  "is_latest",      default: true
-    t.boolean  "has_notified",   default: false
-    t.string   "device_token",                   null: false
+    t.boolean  "is_latest",       default: true
+    t.boolean  "has_notified",    default: false
+    t.string   "device_token",                    null: false
     t.float    "event_lng"
     t.float    "event_lat"
     t.float    "user_lng"
     t.float    "user_lat"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "google_event_id"
   end
 
 end
