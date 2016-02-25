@@ -7,10 +7,10 @@ class EventsController < ApplicationController
   def create
     @event = load_event
     if (@event)
-      put "Updating existing event"
+      puts "Updating existing event"
       update_event
     else
-      put "Creating new event"
+      puts "Creating new event"
       @event = Event.new(
         google_event_id: params["id"],
         name: params["name"],
