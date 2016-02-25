@@ -5,28 +5,51 @@ class EventsController < ApplicationController
   end
 
   def create
-    event_params = params
-    @event = Event.new(
-      google_event_id: event_params["id"],
-      name: event_params["name"],
-      address: event_params["address"],
-      user_email: event_params["user_email"],
-      start_time: event_params["start_time"],
-      departure_time: event_params["departure_time"],
-      device_token: event_params["device_token"],
-      user_lat: event_params["user_lat"],
-      user_lng: event_params["user_lng"],
-      event_lat: event_params["event_lat"],
-      event_lng: event_params["event_lng"]
-      )
+    @event = load_event
+    if (@event)
+      put "Updating existing event"
+      update_event
+    else
+      put "Creating new event"
+      @event = Event.new(
+        google_event_id: params["id"],
+        name: params["name"],
+        address: params["address"],
+        user_email: params["user_email"],
+        start_time: params["start_time"],
+        departure_time: params["departure_time"],
+        device_token: params["device_token"],
+        user_lat: params["user_lat"],
+        user_lng: params["user_lng"],
+        event_lat: params["event_lat"],
+        event_lng: params["event_lng"]
+        )
+    end
+
     if @event.save
-      render text: 'Event saved'
+      render text: "Event saved #{@event.google_event_id}"
     else
       render text: 'Event not saved'
       puts "Not saving #{@event.google_event_id}"
     end
   end
 
+  private
+
+  def update_event
+    @event.name = params["name"],
+    @event.address = params["address"],
+    @event.user_email = params["user_email"],
+    @event.start_time = params["start_time"],
+    @event.device_token = params["device_token"],
+    @event.user_lat = params["user_lat"],
+    @event.user_lng = params["user_lng"],
+    @event.event_lat = params["event_lat"],
+    @event.event_lng = params["event_lng"]
 end
 
-# mode: driving, walking, or transit
+  def load_event
+    Event.find_by(google_event_id: id)
+  end
+
+end

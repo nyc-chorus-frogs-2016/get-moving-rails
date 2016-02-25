@@ -8,20 +8,10 @@ task :find_upcoming => :environment do
 
     response = HTTParty.get(url)
     puts response.body
-    # puts "Original Event: " event
 
     seconds_to_destination = response["rows"][0]["elements"][0]["duration"]["value"]
     new_departure_time = event.start_time - seconds_to_destination
     event.update_columns(departure_time: new_departure_time)
-
-    puts "Seconds to destination: "
-    puts seconds_to_destination
-    puts "Minutes to destination: "
-    puts (seconds_to_destination/60).to_s
-    puts "New departure time: "
-    puts new_departure_time
-    puts "Newly updated event departure time: "
-    puts event.departure_time
 
   end
 
@@ -33,21 +23,8 @@ task :find_upcoming => :environment do
       puts "You need to leave for #{event.name} in " + ((event.departure_time - Time.now)/60).to_s + " minutes, Get Moving!"
       puts "Send a push notification for '#{event.name}' to Apple."
 
-      APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in the next 10 minutes!", badge: 1, sound: 'default')
+      APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in" + ((event.departure_time - Time.now)/60).to_s + "minutes!", badge: 1, sound: 'default')
       event.update_attributes(has_notified: true)
     end
   end
 end
-
-# bundle exec rake scheduled_jobs
-
-# be cap deploy
-
-# rng2@scdr:~/apps/get-moving-rails/current/lib/tasks$  /home/rng2/run_scheduled_jobs.sh
-
-# rng2@scdr:~/apps/get-moving-rails/current/lib/tasks$ rails c
-
-# rng2@scdr:~/apps/get-moving-rails/current$ bundle exec rake find_upcoming
-
-# to run the task now on the server: enter what is after the $:
-# rng2@scdr:~$  ./run_scheduled_jobs.sh
