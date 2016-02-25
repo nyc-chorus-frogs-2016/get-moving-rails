@@ -37,16 +37,16 @@ class EventsController < ApplicationController
   private
 
   def update_event
-    @event.name = params["name"],
-    @event.address = params["address"],
-    @event.user_email = params["user_email"],
-    @event.start_time = params["start_time"],
-    @event.device_token = params["device_token"],
-    @event.user_lat = params["user_lat"],
-    @event.user_lng = params["user_lng"],
-    @event.event_lat = params["event_lat"],
+    @event.name = params["name"]
+    @event.address = params["address"]
+    @event.user_email = params["user_email"]
+    @event.start_time = params["start_time"]
+    @event.device_token = params["device_token"]
+    @event.user_lat = params["user_lat"]
+    @event.user_lng = params["user_lng"]
+    @event.event_lat = params["event_lat"]
     @event.event_lng = params["event_lng"]
-end
+  end
 
   def load_event
     Event.find_by(google_event_id: params[:id])
