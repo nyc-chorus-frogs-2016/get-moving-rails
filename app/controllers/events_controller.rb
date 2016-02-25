@@ -49,7 +49,7 @@ class EventsController < ApplicationController
 end
 
   def load_event
-    Event.find_by(google_event_id: id)
+    Event.find_by(google_event_id: params[:id])
   end
 
 end
