@@ -17,7 +17,4 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def dont_notify_if_stale
-  end
-
 end

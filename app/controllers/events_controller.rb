@@ -28,5 +28,3 @@ class EventsController < ApplicationController
   end
 
 end
-
-# mode: driving, walking, or transit
