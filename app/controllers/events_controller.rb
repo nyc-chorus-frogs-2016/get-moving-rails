@@ -23,6 +23,7 @@ class EventsController < ApplicationController
       render text: 'Event saved'
     else
       render text: 'Event not saved'
+      puts "Not saving #{@event.google_event_id}"
     end
   end
 

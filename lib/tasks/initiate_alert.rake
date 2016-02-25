@@ -7,6 +7,7 @@ task :find_upcoming => :environment do
     url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + event.user_lat.to_s + "," + event.user_lng.to_s + "&destinations=" + event.event_lat.to_s + "," + event.event_lng.to_s + "&key=#{key}"
 
     response = HTTParty.get(url)
+    puts response.body
 
     seconds_to_destination = response["rows"][0]["elements"][0]["duration"]["value"]
     new_departure_time = event.start_time - seconds_to_destination
