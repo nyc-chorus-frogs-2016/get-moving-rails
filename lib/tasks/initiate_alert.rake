@@ -8,10 +8,21 @@ task :find_upcoming => :environment do
 
     response = HTTParty.get(url)
     puts response.body
+    # puts "Original Event: " event
 
     seconds_to_destination = response["rows"][0]["elements"][0]["duration"]["value"]
     new_departure_time = event.start_time - seconds_to_destination
     event.update_columns(departure_time: new_departure_time)
+
+    puts "Seconds to destination: "
+    puts seconds_to_destination
+    puts "Minutes to destination: "
+    puts (seconds_to_destination/60).to_s
+    puts "New departure time: "
+    puts new_departure_time
+    puts "Newly updated event departure time: "
+    puts event.departure_time
+
   end
 
   if Event.where("departure_time < ? AND has_notified = ? AND is_latest = ? AND start_time > ?", Time.now + 600, false, true, Time.now).empty?
@@ -27,13 +38,3 @@ task :find_upcoming => :environment do
     end
   end
 end
-
-
-task :calculate_directions => :environment do
-end
-
-task :scheduled_jobs => [:calculate_directions, :find_upcoming] do
-  puts 'Running scheduled tasks'
-end
-
-# the notifications are being repeated and the departure_time is no longer being calculated
