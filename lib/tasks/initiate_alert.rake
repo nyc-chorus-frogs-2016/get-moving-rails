@@ -38,3 +38,16 @@ task :find_upcoming => :environment do
     end
   end
 end
+
+# bundle exec rake scheduled_jobs
+
+# be cap deploy
+
+# rng2@scdr:~/apps/get-moving-rails/current/lib/tasks$  /home/rng2/run_scheduled_jobs.sh
+
+# rng2@scdr:~/apps/get-moving-rails/current/lib/tasks$ rails c
+
+# rng2@scdr:~/apps/get-moving-rails/current$ bundle exec rake find_upcoming
+
+# to run the task now on the server: enter what is after the $:
+# rng2@scdr:~$  ./run_scheduled_jobs.sh
