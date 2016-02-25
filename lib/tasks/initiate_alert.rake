@@ -22,8 +22,10 @@ task :find_upcoming => :environment do
     events_to_alert.each do |event|
       puts "You need to leave for #{event.name} in " + ((event.departure_time - Time.now)/60).to_s + " minutes, Get Moving!"
       puts "Send a push notification for '#{event.name}' to Apple."
-
-      APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in" + ((event.departure_time - Time.now)/60).to_s + "minutes!", badge: 1, sound: 'default')
+      if (event.departure_time - Time.now) < 0
+        APNS.send_notification(event.device_token, alert:"You should have left for #{event.name} " + ((event.departure_time - Time.now)/60).round.to_s + "minutes ago, Get Moving!", badge: 1, sound: 'default')
+      else
+        APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in" + ((event.departure_time - Time.now)/60).round.to_s + "minutes, Get Moving!", badge: 1, sound: 'default')
       event.update_attributes(has_notified: true)
     end
   end
