@@ -34,3 +34,5 @@ end
 task :scheduled_jobs => [:calculate_directions, :find_upcoming] do
   puts 'Running scheduled tasks'
 end
+
+# the notifications are being repeated and the departure_time is no longer being calculated
