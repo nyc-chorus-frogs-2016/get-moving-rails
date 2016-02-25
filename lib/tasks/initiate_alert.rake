@@ -30,7 +30,7 @@ task :find_upcoming => :environment do
       if (event.departure_time - Time.now) < 0
         APNS.send_notification(event.device_token, alert:"You should have left for #{event.name} " + (((event.departure_time - Time.now)/60)*(-1)).round.to_s + " minutes ago, Get Moving!", badge: 1, sound: 'default')
       else
-        APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in" + (((event.departure_time - Time.now)/60)).round.to_s + " minutes, Get Moving!", badge: 1, sound: 'default')
+        APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in " + (((event.departure_time - Time.now)/60)).round.to_s + " minutes, Get Moving!", badge: 1, sound: 'default')
       event.update_attributes(has_notified: true)
       end
     end
