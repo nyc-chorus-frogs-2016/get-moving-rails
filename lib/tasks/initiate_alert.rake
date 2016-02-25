@@ -20,13 +20,19 @@ task :find_upcoming => :environment do
   else
     events_to_alert = Event.where("departure_time < ? AND has_notified = ? AND is_latest = ? AND start_time > ?", Time.now + 600, false, true, Time.now)
     events_to_alert.each do |event|
-      puts "You need to leave for #{event.name} in " + ((event.departure_time - Time.now)/60).to_s + " minutes, Get Moving!"
-      puts "Send a push notification for '#{event.name}' to Apple."
       if (event.departure_time - Time.now) < 0
-        APNS.send_notification(event.device_token, alert:"You should have left for #{event.name} " + ((event.departure_time - Time.now)/60)*(-1).round.to_s + "minutes ago, Get Moving!", badge: 1, sound: 'default')
+        puts "You should have left for #{event.name} " + (((event.departure_time - Time.now)/60)*(-1)).round.to_s + " minutes ago, Get Moving!"
+        puts "Send a push notification for '#{event.name}' to Apple."
       else
-        APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in" + ((event.departure_time - Time.now)/60).round.to_s + "minutes, Get Moving!", badge: 1, sound: 'default')
+        puts "You need to leave for #{event.name} in" + (((event.departure_time - Time.now)/60)).round.to_s + " minutes, Get Moving!"
+        puts "Send a push notification for '#{event.name}' to Apple."
+      end
+      if (event.departure_time - Time.now) < 0
+        APNS.send_notification(event.device_token, alert:"You should have left for #{event.name} " + (((event.departure_time - Time.now)/60)*(-1)).round.to_s + " minutes ago, Get Moving!", badge: 1, sound: 'default')
+      else
+        APNS.send_notification(event.device_token, alert:"You need to leave for #{event.name} in" + (((event.departure_time - Time.now)/60)).round.to_s + " minutes, Get Moving!", badge: 1, sound: 'default')
       event.update_attributes(has_notified: true)
+      end
     end
   end
 end
